@@ -5,9 +5,6 @@ const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]; // 1 = Ace, 11 = Jac
 const deck = [];
 let cardStacks = [];
 
-
-
-
 suits.forEach(suit => {
   values.forEach(value => {
     switch(value) {
@@ -51,6 +48,8 @@ function initialiseCards () {
         cardStacks.push(currentStack);
     }
     cardStacks.unshift(workingDeck);
+    let flippedStack = [];
+    cardStacks.push(flippedStack);
     console.log(cardStacks);
 }
 
@@ -132,7 +131,7 @@ function replaceLastCard(placedCardStack) {
 }
 
 function makeRemainderCardVisible(remainderCardLi) {
-    remainderCardLi[remainderCardLi.length-1].classList.add("top-card");
+    remainderCardLi[remainderCardLi.length-1].classList.add("top-remainder-card");
 }
 
 
@@ -174,6 +173,117 @@ function placeCardsOnTable() {
     makeRemainderCardVisible(remainderCardLi);
 
 
+}
+
+
+
+
+function handleGetNewRemainderCard() {
+
+
+    let remainderCardHiddenStack = document.getElementById("non-flipped-stack");
+    let remainderCardShownStack = document.getElementById("flipped-stack");
+    let remainderCardHiddenLi = remainderCardHiddenStack.getElementsByTagName("li");
+    let remainderCardShownLi = remainderCardShownStack.getElementsByTagName("li");
+
+
+    let remainderFlippedStack = cardStacks[cardStacks.length-1];
+    let remainderNonFlippedStack = cardStacks[0];
+
+
+    if (remainderCardHiddenLi.length == 0) {
+
+        while (remainderFlippedStack.length != 0) {
+            remainderNonFlippedStack.push(remainderFlippedStack[0]);
+            remainderFlippedStack.push();
+        } // transfer cards from array to array
+
+
+        // need to transfer li children
+
+
+
+        // CHECK ARRAY INPUT ORDER ?? BACKWARDS
+
+
+        remainderFlippedStack.forEach(card => {
+            remainderNonFlippedStack.push(card)
+            // handle when stack is empty
+        })
+    }
+
+
+
+    // when remainder hidden cards is empty, reset
+    // transfer cards from remaindercardShownStack to remaindercardhiddenstack and remainderCardShownLi to remaindercardhiddenLi
+    // reset placeholder to be visible, remove all cards from remaindercardShownStack and removechild from remainderCardShownLi
+    
+
+
+
+
+
+
+    if (remainderFlippedStack.length === 0) {
+        remainderCardShownLi[0].classList.remove("top-flipped-card");
+    } else if (remainderFlippedStack.length == 2) {
+        remainderCardShownStack.classList.add("hasCardUnder"); // remove when list is reset
+        remainderCardShownLi[remainderCardShownLi.length-1].classList.remove("top-flipped-card");
+    } else {
+        remainderCardShownLi[remainderCardShownLi.length-1].classList.remove("top-flipped-card");
+    }
+
+
+    remainderCardHiddenLi[remainderCardHiddenLi.length-1].classList.remove("top-remainder-card");
+    remainderCardHiddenLi[remainderCardHiddenLi.length-1].classList.remove("card-back");
+
+    remainderFlippedStack.push(remainderNonFlippedStack[remainderNonFlippedStack.length-1]);
+
+    remainderCardShownStack.appendChild(remainderCardHiddenLi[remainderCardHiddenLi.length-1]);
+
+    remainderCardShownLi = remainderCardShownStack.getElementsByTagName("li");
+
+    remainderCardShownLi[remainderCardShownLi.length-1].classList.add("top-flipped-card");
+
+    remainderNonFlippedStack.splice(remainderNonFlippedStack.length-1,1);
+
+    remainderCardHiddenStack.removeChild(remainderCardHiddenLi[remainderCardHiddenLi.length-1]);
+
+
+
+
+
+    remainderCardHiddenLi[remainderCardHiddenLi.length-1].classList.add("top-remainder-card");
+    remainderCardHiddenLi[remainderCardHiddenLi.length-1].classList.add("card-back");
+
+
+
+
+    getNewRemainderCard.removeEventListener("click", handleGetNewRemainderCard)
+    getNewRemainderCard = document.querySelector(".top-remainder-card");
+    getNewRemainderCard.addEventListener("click", handleGetNewRemainderCard)
+
+
+
+
+
+
+
+
+
+
+
+
+    // remainderCardLi[remainderCardLi.length-1].classList.remove("top-card");
+
+    
+
+    // remainderFlippedStack.push(remainderCardLi[remainderCardLi.length-1]);
+
+
+
+
+
 
 
 
@@ -181,9 +291,36 @@ function placeCardsOnTable() {
 }
 
 
+
+
+
+
+
+
+
+
+
 initialiseCards();
 
 placeCardsOnTable();
+
+
+
+
+
+
+
+
+
+
+
+
+var getNewRemainderCard = document.querySelector(".top-remainder-card");
+console.log(getNewRemainderCard)
+
+getNewRemainderCard.addEventListener("click", handleGetNewRemainderCard)
+
+
 
 
 

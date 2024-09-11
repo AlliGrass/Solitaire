@@ -101,13 +101,29 @@ p {
     grid-template-columns: 1fr 1fr;
 }
 
-#non-flipped-stack * {
+#non-flipped-stack *, #flipped-stack *{
     display: none;
 }
 
-#non-flipped-stack > .top-card {
+#non-flipped-stack > .top-remainder-card {
     display: block;
 }
+
+#flipped-stack > .top-flipped-card, #flipped-stack >.top-flipped-card *{
+    display: flex;
+}
+
+
+#flipped-stack >.top-flipped-card > .card-info{
+    display: block;
+}
+
+.hasCardUnder {
+    background-color: blue;
+    border: 0.2px 70% black;
+    border-radius: 2px;
+}
+
 
 .working-card-space {
     display: flex;
