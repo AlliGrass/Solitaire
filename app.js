@@ -6,13 +6,6 @@ const deck = [];
 let cardStacks = [];
 
 
-let stackRow1 = document.getElementById("stack-row-1");
-let stackRow2 = document.getElementById("stack-row-2");
-let stackRow3 = document.getElementById("stack-row-3");
-let stackRow4 = document.getElementById("stack-row-4");
-let stackRow5 = document.getElementById("stack-row-5");
-let stackRow6 = document.getElementById("stack-row-6");
-let stackRow7 = document.getElementById("stack-row-7");
 
 
 suits.forEach(suit => {
